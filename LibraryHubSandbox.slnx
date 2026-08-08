@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="LibraryHubSandbox/LibraryHubSandbox.csproj" />
+  <Project Path="LibraryHub.Application/LibraryHub.Application.csproj" />
+  <Project Path="LibraryHub.Domain/LibraryHub.Domain.csproj" />
+  <Project Path="LibraryHub.Infrastructure/LibraryHub.Infrastructure.csproj" />
+  <Project Path="LibraryHub.WebApi/LibraryHub.WebApi.csproj" />
 </Solution>
