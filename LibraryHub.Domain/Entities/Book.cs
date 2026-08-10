@@ -10,6 +10,10 @@ public class Book : BaseEntity
 
     public int PublishYear { get; set; }
 
+    public int StokAdedi { get; set; }
+
+    public int RaftakiAdet { get; set; }
+
     public int CategoryId { get; set; }
 
     public Category Category { get; set; } = null!;
