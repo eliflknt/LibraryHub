@@ -1,6 +1,9 @@
+using LibraryHub.Application.Services;
 using LibraryHub.Infrastructure;
 using LibraryHub.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using LibraryHub.Application.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,10 @@ builder.Services.AddDbContext<LibraryDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure();
+builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfile));
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
