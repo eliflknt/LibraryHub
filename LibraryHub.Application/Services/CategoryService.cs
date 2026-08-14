@@ -21,6 +21,7 @@ namespace LibraryHub.Application.Services
         public async Task<IEnumerable<CategoryDto>> GetAllAsync()
         {
             var categories = await _repository.GetAllAsync();
+
             return _mapper.Map<IEnumerable<CategoryDto>>(categories);
         }
 
@@ -39,11 +40,14 @@ namespace LibraryHub.Application.Services
             var category = _mapper.Map<Category>(dto);
 
             await _repository.AddAsync(category);
+            await _repository.SaveChangesAsync();
 
             return _mapper.Map<CategoryDto>(category);
         }
 
-        public async Task<CategoryDto?> UpdateAsync(int id, UpdateCategoryDto dto)
+        public async Task<CategoryDto?> UpdateAsync(
+            int id,
+            UpdateCategoryDto dto)
         {
             var category = await _repository.GetByIdAsync(id);
 
@@ -53,6 +57,7 @@ namespace LibraryHub.Application.Services
             _mapper.Map(dto, category);
 
             _repository.Update(category);
+            await _repository.SaveChangesAsync();
 
             return _mapper.Map<CategoryDto>(category);
         }
@@ -65,6 +70,7 @@ namespace LibraryHub.Application.Services
                 return false;
 
             _repository.Delete(category);
+            await _repository.SaveChangesAsync();
 
             return true;
         }

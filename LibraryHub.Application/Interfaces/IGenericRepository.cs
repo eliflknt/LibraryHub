@@ -8,6 +8,7 @@ namespace LibraryHub.Application.Interfaces
         Task<T?> GetByIdAsync(int id);
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
         Task AddAsync(T entity);
+        Task SaveChangesAsync();
         void Update(T entity);
         void Delete(T entity);
     }

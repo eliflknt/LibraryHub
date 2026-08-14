@@ -59,6 +59,7 @@ namespace LibraryHub.Application.Services
             var member = _mapper.Map<Member>(dto);
 
             await _repository.AddAsync(member);
+            await _repository.SaveChangesAsync();
 
             var memberDto = _mapper.Map<MemberDto>(member);
 
@@ -77,6 +78,7 @@ namespace LibraryHub.Application.Services
             _mapper.Map(dto, member);
 
             _repository.Update(member);
+            await _repository.SaveChangesAsync();
 
             var memberDto = _mapper.Map<MemberDto>(member);
 
@@ -91,6 +93,7 @@ namespace LibraryHub.Application.Services
                 return Result<bool>.Failure("Üye bulunamadı.");
 
             _repository.Delete(member);
+            await _repository.SaveChangesAsync();
 
             return Result<bool>.Success(true);
         }

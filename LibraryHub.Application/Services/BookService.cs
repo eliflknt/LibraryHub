@@ -57,6 +57,7 @@ namespace LibraryHub.Application.Services
             var book = _mapper.Map<Book>(dto);
 
             await _repository.AddAsync(book);
+            await _repository.SaveChangesAsync();
 
             var bookDto = _mapper.Map<BookDto>(book);
 
@@ -73,6 +74,7 @@ namespace LibraryHub.Application.Services
             _mapper.Map(dto, book);
 
             _repository.Update(book);
+            await _repository.SaveChangesAsync();
 
             var bookDto = _mapper.Map<BookDto>(book);
 
@@ -87,6 +89,7 @@ namespace LibraryHub.Application.Services
                 return Result<bool>.Failure("Kitap bulunamadı.");
 
             _repository.Delete(book);
+            await _repository.SaveChangesAsync();
 
             return Result<bool>.Success(true);
         }

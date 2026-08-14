@@ -1,10 +1,13 @@
 ﻿using LibraryHub.Domain.Common;
 
-namespace LibraryHub.Domain.Entities;
-
-public class Category : BaseEntity
+namespace LibraryHub.Domain.Entities
 {
-    public string Name { get; set; } = string.Empty;
+    public class Category : BaseEntity
+    {
+        public string Name { get; set; } = string.Empty;
 
-    public ICollection<Book> Books { get; set; } = new List<Book>();
+        public string Description { get; set; } = string.Empty;
+
+        public ICollection<Book> Books { get; set; } = new List<Book>();
+    }
 }

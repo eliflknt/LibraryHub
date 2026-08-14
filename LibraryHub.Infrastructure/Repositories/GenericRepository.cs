@@ -36,6 +36,11 @@ namespace LibraryHub.Infrastructure.Repositories
             await _dbSet.AddAsync(entity);
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
         public void Update(T entity)
         {
             _dbSet.Update(entity);
