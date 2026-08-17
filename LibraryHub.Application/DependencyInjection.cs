@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using LibraryHub.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LibraryHub.Application
@@ -10,6 +11,11 @@ namespace LibraryHub.Application
         {
             services.AddScoped<IValidator<DTOs.CreateBookDto>, Validators.CreateBookDtoValidator>();
             services.AddScoped<IValidator<DTOs.CreateMemberDto>, Validators.CreateMemberDtoValidator>();
+
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IMemberService, MemberService>();
+            services.AddScoped<ILoanService, LoanService>();
 
             return services;
         }

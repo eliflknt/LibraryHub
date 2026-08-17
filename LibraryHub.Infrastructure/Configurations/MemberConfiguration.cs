@@ -21,6 +21,10 @@ public class MemberConfiguration : IEntityTypeConfiguration<Member>
         builder.Property(m => m.Phone)
             .HasMaxLength(20);
 
+        builder.Property(m => m.IsActive)
+            .IsRequired()
+            .HasDefaultValue(true);
+
         builder.HasMany(m => m.Loans)
             .WithOne(l => l.Member)
             .HasForeignKey(l => l.MemberId)
@@ -33,6 +37,7 @@ public class MemberConfiguration : IEntityTypeConfiguration<Member>
                 FullName = "Ahmet Yılmaz",
                 Email = "ahmet.yilmaz@example.com",
                 Phone = "05551112233",
+                IsActive = true,
                 CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             },
             new Member
@@ -41,6 +46,7 @@ public class MemberConfiguration : IEntityTypeConfiguration<Member>
                 FullName = "Ayşe Demir",
                 Email = "ayse.demir@example.com",
                 Phone = "05552223344",
+                IsActive = true,
                 CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             },
             new Member
@@ -49,6 +55,7 @@ public class MemberConfiguration : IEntityTypeConfiguration<Member>
                 FullName = "Mehmet Kaya",
                 Email = "mehmet.kaya@example.com",
                 Phone = "05553334455",
+                IsActive = true,
                 CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             }
         );

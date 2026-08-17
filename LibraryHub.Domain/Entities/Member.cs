@@ -10,5 +10,7 @@ public class Member : BaseEntity
 
     public string Phone { get; set; } = string.Empty;
 
+    public bool IsActive { get; set; } = true;
+
     public ICollection<Loan> Loans { get; set; } = new List<Loan>();
 }
