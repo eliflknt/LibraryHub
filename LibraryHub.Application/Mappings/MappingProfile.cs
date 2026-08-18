@@ -37,15 +37,18 @@ namespace LibraryHub.Application.Mappings
             // Member
             CreateMap<Member, MemberDto>()
                 .ForMember(dest => dest.AdSoyad, opt => opt.MapFrom(src => src.FullName))
-                .ForMember(dest => dest.Telefon, opt => opt.MapFrom(src => src.Phone));
+                .ForMember(dest => dest.Telefon, opt => opt.MapFrom(src => src.Phone))
+                .ForMember(dest => dest.AktifMi, opt => opt.MapFrom(src => src.IsActive));
 
             CreateMap<CreateMemberDto, Member>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.AdSoyad))
-                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Telefon));
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Telefon))
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.AktifMi));
 
             CreateMap<UpdateMemberDto, Member>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.AdSoyad))
-                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Telefon));
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Telefon))
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.AktifMi));
         }
     }
 }

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<LibraryHub.WebApi.ViewModels.MemberViewModel>
+
+@{
+    ViewData["Title"] = "Üyeler";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Üyeler</h1>
+
+        <a asp-controller="MvcBooks"
+           asp-action="Index"
+           class="btn btn-secondary">
+            Kitaplara Dön
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            Henüz kayıtlı üye bulunmamaktadır.
+        </div>
+    }
+    else
+    {
+        <table class="table table-striped table-hover">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Ad Soyad</th>
+                    <th>E-posta</th>
+                    <th>Telefon</th>
+                    <th>Üyelik Tarihi</th>
+                    <th>Durum</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var member in Model)
+                {
+                    <tr>
+                        <td>@member.AdSoyad</td>
+                        <td>@member.Email</td>
+                        <td>@member.Telefon</td>
+                        <td>@member.UyelikTarihi.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            @if (member.AktifMi)
+                            {
+                                <span class="badge bg-success">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Pasif</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    }
+
+</div>

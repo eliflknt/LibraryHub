@@ -1,0 +1,95 @@
+﻿@model LibraryHub.WebApi.ViewModels.BorrowBookViewModel
+
+@{
+    ViewData["Title"] = "Kitap Ödünç Ver";
+
+    var members = ViewBag.Members
+        as IEnumerable<LibraryHub.Application.DTOs.MemberDto>
+        ?? Enumerable.Empty<LibraryHub.Application.DTOs.MemberDto>();
+
+    var books = ViewBag.Books
+        as IEnumerable<LibraryHub.Application.DTOs.BookDto>
+        ?? Enumerable.Empty<LibraryHub.Application.DTOs.BookDto>();
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Kitap Ödünç Ver</h1>
+
+        <a href="/MvcBooks" class="btn btn-secondary">
+            Kitaplara Dön
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div asp-validation-summary="ModelOnly"
+         class="alert alert-danger">
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <form action="/MvcLoans/Borrow" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label asp-for="MemberId" class="form-label">
+                        Üye
+                    </label>
+
+                    <select asp-for="MemberId" class="form-select">
+                        <option value="0">Üye seçiniz</option>
+
+                        @foreach (var member in members)
+                        {
+                            <option value="@member.Id">
+                                @member.AdSoyad
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="BookId" class="form-label">
+                        Kitap
+                    </label>
+
+                    <select asp-for="BookId" class="form-select">
+                        <option value="0">Kitap seçiniz</option>
+
+                        @foreach (var book in books)
+                        {
+                            if (book.RaftakiAdet > 0)
+                            {
+                                <option value="@book.Id">
+                                    @book.Baslik - Raftaki: @book.RaftakiAdet
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@book.Id" disabled>
+                                    @book.Baslik - Rafta yok
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Ödünç Ver
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
