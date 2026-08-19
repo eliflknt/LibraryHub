@@ -3,6 +3,7 @@ using System;
 using LibraryHub.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryHub.Infrastructure.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    partial class LibraryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260819135400_AddUserAuthentication")]
+    partial class AddUserAuthentication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -545,35 +548,6 @@ namespace LibraryHub.Infrastructure.Migrations
                     b.HasIndex("MemberId");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1001,
-                            CreatedAt = new DateTime(2026, 8, 19, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "admin@libraryhub.com",
-                            IsActive = true,
-                            PasswordHash = "100000.MiuBPTHhq81y1s18F7hUKA==.aUyiwiIvJsPfqPeEVk6csHU00xsrRh95QALye1S1ot0=",
-                            Role = "Admin"
-                        },
-                        new
-                        {
-                            Id = 1002,
-                            CreatedAt = new DateTime(2026, 8, 19, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "librarian@libraryhub.com",
-                            IsActive = true,
-                            PasswordHash = "100000.FBn+sF9YO1ffISS9eN5NOg==.AlrLZ0auUnmkkHVpVszLHzXwp9Gi1seCQGMVaHBZCBI=",
-                            Role = "Librarian"
-                        },
-                        new
-                        {
-                            Id = 1003,
-                            CreatedAt = new DateTime(2026, 8, 19, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "member@libraryhub.com",
-                            IsActive = true,
-                            PasswordHash = "100000.IdYbp8ZEpCo9h36CKJdFPQ==.Nyvb2WCHQvPSJr4nW9yFTSloWiKdduA1guPLVgYHzv8=",
-                            Role = "Member"
-                        });
                 });
 
             modelBuilder.Entity("LibraryHub.Domain.Entities.Book", b =>

@@ -20,6 +20,8 @@ public class LibraryDbContext : DbContext
 
     public DbSet<Member> Members { get; set; }
 
+    public DbSet<User> Users { get; set; }
+
     public DbSet<Loan> Loans { get; set; }
 
     public DbSet<Fine> Fines { get; set; }

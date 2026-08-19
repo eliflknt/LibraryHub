@@ -1,5 +1,6 @@
 ﻿using LibraryHub.Application.DTOs;
 using LibraryHub.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryHub.WebApi.Controllers
@@ -37,6 +38,7 @@ namespace LibraryHub.WebApi.Controllers
             return Ok(result.Data);
         }
 
+        [Authorize(Roles = "Admin,Librarian")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateBookDto dto)
         {
@@ -62,6 +64,7 @@ namespace LibraryHub.WebApi.Controllers
             return Ok(result.Data);
         }
 
+        [Authorize(Roles = "Admin,Librarian")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
