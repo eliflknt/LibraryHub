@@ -460,8 +460,6 @@ public class LoanServiceTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Data.Should().NotBeNull();
-
-        // 5 gün gecikme x 2 TL = 10 TL
         result.Data!.FineAmount.Should().Be(10m);
 
         loan.Status.Should().Be(LoanStatus.Returned);
@@ -487,5 +485,40 @@ public class LoanServiceTests
         loanRepository.Verify(
             x => x.SaveChangesAsync(),
             Times.Once);
+    }
+
+    [Fact]
+    public async Task BorrowBookAsync_ShouldFail_WhenMemberDoesNotExist()
+    {
+        // Arrange
+        var loanRepository = new Mock<IGenericRepository<Loan>>();
+        var memberRepository = new Mock<IGenericRepository<Member>>();
+        var bookRepository = new Mock<IGenericRepository<Book>>();
+        var fineRepository = new Mock<IGenericRepository<Fine>>();
+
+        memberRepository
+            .Setup(x => x.GetByIdAsync(1))
+            .ReturnsAsync((Member?)null);
+
+        var service = new LoanService(
+            loanRepository.Object,
+            memberRepository.Object,
+            bookRepository.Object,
+            fineRepository.Object);
+
+        // Act
+        var result = await service.BorrowBookAsync(1, 1);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Error.Should().Be("Üye bulunamadı.");
+
+        bookRepository.Verify(
+            x => x.GetByIdAsync(It.IsAny<int>()),
+            Times.Never);
+
+        loanRepository.Verify(
+            x => x.AddAsync(It.IsAny<Loan>()),
+            Times.Never);
     }
 }
