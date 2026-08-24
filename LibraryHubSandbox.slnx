@@ -2,6 +2,7 @@
   <Project Path="LibraryHub.Application/LibraryHub.Application.csproj" />
   <Project Path="LibraryHub.Domain/LibraryHub.Domain.csproj" />
   <Project Path="LibraryHub.Infrastructure/LibraryHub.Infrastructure.csproj" />
+  <Project Path="LibraryHub.IntegrationTests/LibraryHub.IntegrationTests.csproj" Id="cb8fe2c8-02f7-4757-8f5e-8df36b01d733" />
   <Project Path="LibraryHub.UnitTests/LibraryHub.UnitTests.csproj" />
   <Project Path="LibraryHub.WebApi/LibraryHub.WebApi.csproj" />
 </Solution>

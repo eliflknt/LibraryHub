@@ -17,9 +17,17 @@ namespace LibraryHub.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(
+            int page = 1,
+            int pageSize = 10,
+            int? categoryId = null,
+            string? search = null)
         {
-            var result = await _bookService.GetAllAsync();
+            var result = await _bookService.GetAllAsync(
+                page,
+                pageSize,
+                categoryId,
+                search);
 
             if (!result.IsSuccess)
                 return BadRequest(result.Error);

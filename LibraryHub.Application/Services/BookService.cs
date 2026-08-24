@@ -23,12 +23,58 @@ namespace LibraryHub.Application.Services
             _validator = validator;
         }
 
-        public async Task<Result<IEnumerable<BookDto>>> GetAllAsync()
+        public async Task<Result<PagedResult<BookDto>>> GetAllAsync(
+            int page,
+            int pageSize,
+            int? categoryId,
+            string? search)
         {
-            var books = await _repository.GetAllAsync();
-            var bookDtos = _mapper.Map<IEnumerable<BookDto>>(books);
+            if (page < 1)
+                page = 1;
 
-            return Result<IEnumerable<BookDto>>.Success(bookDtos);
+            if (pageSize < 1)
+                pageSize = 10;
+
+            if (pageSize > 100)
+                pageSize = 100;
+
+            System.Linq.Expressions.Expression<Func<Book, bool>>? predicate = null;
+
+            if (categoryId.HasValue && !string.IsNullOrWhiteSpace(search))
+            {
+                predicate = book =>
+                    book.CategoryId == categoryId.Value &&
+                    book.Title.ToLower().Contains(search.ToLower());
+            }
+            else if (categoryId.HasValue)
+            {
+                predicate = book =>
+                    book.CategoryId == categoryId.Value;
+            }
+            else if (!string.IsNullOrWhiteSpace(search))
+            {
+                predicate = book =>
+                    book.Title.ToLower().Contains(search.ToLower());
+            }
+
+            var skip = (page - 1) * pageSize;
+
+            var result = await _repository.GetPagedAsync(
+                predicate,
+                skip,
+                pageSize);
+
+            var bookDtos = _mapper.Map<List<BookDto>>(result.Items);
+
+            var pagedResult = new PagedResult<BookDto>
+            {
+                Items = bookDtos,
+                Page = page,
+                PageSize = pageSize,
+                TotalCount = result.TotalCount
+            };
+
+            return Result<PagedResult<BookDto>>.Success(pagedResult);
         }
 
         public async Task<Result<BookDto>> GetByIdAsync(int id)
@@ -49,7 +95,9 @@ namespace LibraryHub.Application.Services
 
             if (!validationResult.IsValid)
             {
-                var errors = string.Join(" ", validationResult.Errors.Select(e => e.ErrorMessage));
+                var errors = string.Join(
+                    " ",
+                    validationResult.Errors.Select(e => e.ErrorMessage));
 
                 return Result<BookDto>.Failure(errors);
             }
@@ -64,7 +112,9 @@ namespace LibraryHub.Application.Services
             return Result<BookDto>.Success(bookDto);
         }
 
-        public async Task<Result<BookDto>> UpdateAsync(int id, UpdateBookDto dto)
+        public async Task<Result<BookDto>> UpdateAsync(
+            int id,
+            UpdateBookDto dto)
         {
             var book = await _repository.GetByIdAsync(id);
 

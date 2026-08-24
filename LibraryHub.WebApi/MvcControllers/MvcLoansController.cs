@@ -69,10 +69,15 @@ namespace LibraryHub.WebApi.MvcControllers
 
         private async Task LoadBooksAndMembers()
         {
-            var booksResult = await _bookService.GetAllAsync();
+            var booksResult = await _bookService.GetAllAsync(
+                1,
+                100,
+                null,
+                null);
+
             var membersResult = await _memberService.GetAllAsync();
 
-            ViewBag.Books = booksResult.Data?.ToList()
+            ViewBag.Books = booksResult.Data?.Items.ToList()
                 ?? new List<LibraryHub.Application.DTOs.BookDto>();
 
             ViewBag.Members = membersResult.Data?.ToList()

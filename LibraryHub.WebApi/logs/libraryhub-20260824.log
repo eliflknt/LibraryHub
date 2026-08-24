@@ -1,0 +1,52 @@
+2026-08-24 16:45:08.349 +03:00 [INF] Now listening on: https://localhost:7113
+2026-08-24 16:45:08.378 +03:00 [INF] Now listening on: http://localhost:5030
+2026-08-24 16:45:08.490 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-24 16:45:08.516 +03:00 [INF] Hosting environment: Development
+2026-08-24 16:45:08.518 +03:00 [INF] Content root path: C:\Users\ElifAlknt\Desktop\LibraryHub\LibraryHub.WebApi
+2026-08-24 16:46:46.240 +03:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-08-24 16:46:47.064 +03:00 [INF] Executed DbCommand (31ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "Books" AS b
+2026-08-24 16:46:47.280 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-08-24 16:46:47.283 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-08-24 16:46:47.356 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT b."Id", b."CategoryId", b."CreatedAt", b."ISBN", b."PublishYear", b."RaftakiAdet", b."StokAdedi", b."Title"
+FROM "Books" AS b
+LIMIT @__p_1 OFFSET @__p_0
+2026-08-24 16:46:47.463 +03:00 [INF] HTTP GET /api/Books responded 200 in 4272.7443 ms
+2026-08-24 17:26:01.059 +03:00 [INF] Executed DbCommand (19ms) [Parameters=[@__categoryId_Value_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "Books" AS b
+WHERE b."CategoryId" = @__categoryId_Value_0
+2026-08-24 17:26:01.064 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-08-24 17:26:01.066 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-08-24 17:26:01.076 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__categoryId_Value_0='?' (DbType = Int32), @__p_2='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT b."Id", b."CategoryId", b."CreatedAt", b."ISBN", b."PublishYear", b."RaftakiAdet", b."StokAdedi", b."Title"
+FROM "Books" AS b
+WHERE b."CategoryId" = @__categoryId_Value_0
+LIMIT @__p_2 OFFSET @__p_1
+2026-08-24 17:26:01.083 +03:00 [INF] HTTP GET /api/Books responded 200 in 232.6562 ms
+2026-08-24 17:27:38.155 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__ToLower_0_contains='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "Books" AS b
+WHERE lower(b."Title") LIKE @__ToLower_0_contains
+2026-08-24 17:27:38.162 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-08-24 17:27:38.164 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-08-24 17:27:38.171 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__ToLower_0_contains='?', @__p_2='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT b."Id", b."CategoryId", b."CreatedAt", b."ISBN", b."PublishYear", b."RaftakiAdet", b."StokAdedi", b."Title"
+FROM "Books" AS b
+WHERE lower(b."Title") LIKE @__ToLower_0_contains
+LIMIT @__p_2 OFFSET @__p_1
+2026-08-24 17:27:38.175 +03:00 [INF] HTTP GET /api/Books responded 200 in 124.3383 ms
+2026-08-24 17:28:18.252 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__categoryId_Value_0='?' (DbType = Int32), @__ToLower_1_contains='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "Books" AS b
+WHERE b."CategoryId" = @__categoryId_Value_0 AND lower(b."Title") LIKE @__ToLower_1_contains
+2026-08-24 17:28:18.256 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-08-24 17:28:18.258 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-08-24 17:28:18.265 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__categoryId_Value_0='?' (DbType = Int32), @__ToLower_1_contains='?', @__p_3='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT b."Id", b."CategoryId", b."CreatedAt", b."ISBN", b."PublishYear", b."RaftakiAdet", b."StokAdedi", b."Title"
+FROM "Books" AS b
+WHERE b."CategoryId" = @__categoryId_Value_0 AND lower(b."Title") LIKE @__ToLower_1_contains
+LIMIT @__p_3 OFFSET @__p_2
+2026-08-24 17:28:18.269 +03:00 [INF] HTTP GET /api/Books responded 200 in 25.7596 ms

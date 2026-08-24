@@ -5,7 +5,11 @@ namespace LibraryHub.Application.Services
 {
     public interface IBookService
     {
-        Task<Result<IEnumerable<BookDto>>> GetAllAsync();
+        Task<Result<PagedResult<BookDto>>> GetAllAsync(
+            int page,
+            int pageSize,
+            int? categoryId,
+            string? search);
 
         Task<Result<BookDto>> GetByIdAsync(int id);
 

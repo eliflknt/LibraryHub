@@ -22,7 +22,11 @@ namespace LibraryHub.WebApi.MvcControllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var result = await _bookService.GetAllAsync();
+            var result = await _bookService.GetAllAsync(
+                1,
+                100,
+                null,
+                null);
 
             if (!result.IsSuccess || result.Data == null)
             {
@@ -30,7 +34,7 @@ namespace LibraryHub.WebApi.MvcControllers
                     new List<BookViewModel>());
             }
 
-            var books = result.Data.Select(book => new BookViewModel
+            var books = result.Data.Items.Select(book => new BookViewModel
             {
                 Id = book.Id,
                 ISBN = book.ISBN,
