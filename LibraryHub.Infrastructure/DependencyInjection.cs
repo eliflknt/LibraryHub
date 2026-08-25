@@ -14,6 +14,7 @@ namespace LibraryHub.Infrastructure
             services.AddScoped<ILoanRepository, LoanRepository>();
 
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IReportService, ReportService>();
 
             return services;
         }

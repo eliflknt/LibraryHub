@@ -31,5 +31,7 @@ public class LoanConfiguration : IEntityTypeConfiguration<Loan>
             .WithMany(b => b.Loans)
             .HasForeignKey(l => l.BookId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(l => l.DueDate);
     }
 }
