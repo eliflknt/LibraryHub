@@ -49,6 +49,9 @@ namespace LibraryHub.Application.Mappings
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.AdSoyad))
                 .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Telefon))
                 .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.AktifMi));
+
+            // Loan
+            CreateMap<Loan, LoanDto>();
         }
     }
 }

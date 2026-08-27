@@ -1,4 +1,5 @@
-﻿using LibraryHub.Application.DTOs;
+﻿using AutoMapper;
+using LibraryHub.Application.DTOs;
 using LibraryHub.Application.Interfaces;
 using LibraryHub.Application.Results;
 using LibraryHub.Domain.Entities;
@@ -8,21 +9,28 @@ namespace LibraryHub.Application.Services
 {
     public class LoanService : ILoanService
     {
+        private const int MaxActiveLoans = 3;
+        private const int LoanDurationDays = 14;
+        private const decimal DailyFineAmount = 2m;
+
         private readonly IGenericRepository<Loan> _loanRepository;
         private readonly IGenericRepository<Member> _memberRepository;
         private readonly IGenericRepository<Book> _bookRepository;
         private readonly IGenericRepository<Fine> _fineRepository;
+        private readonly IMapper _mapper;
 
         public LoanService(
             IGenericRepository<Loan> loanRepository,
             IGenericRepository<Member> memberRepository,
             IGenericRepository<Book> bookRepository,
-            IGenericRepository<Fine> fineRepository)
+            IGenericRepository<Fine> fineRepository,
+            IMapper mapper)
         {
             _loanRepository = loanRepository;
             _memberRepository = memberRepository;
             _bookRepository = bookRepository;
             _fineRepository = fineRepository;
+            _mapper = mapper;
         }
 
         public async Task<Result<LoanDto>> BorrowBookAsync(int memberId, int bookId)
@@ -50,9 +58,9 @@ namespace LibraryHub.Application.Services
                 .Where(l => l.Status == LoanStatus.Active)
                 .ToList();
 
-            if (activeLoans.Count >= 3)
+            if (activeLoans.Count >= MaxActiveLoans)
                 return Result<LoanDto>.Failure(
-                    "Üye aynı anda en fazla 3 kitap ödünç alabilir.");
+                    $"Üye aynı anda en fazla {MaxActiveLoans} kitap ödünç alabilir.");
 
             if (activeLoans.Any(l => l.BookId == bookId))
                 return Result<LoanDto>.Failure(
@@ -77,7 +85,7 @@ namespace LibraryHub.Application.Services
                 MemberId = memberId,
                 BookId = bookId,
                 LoanDate = today,
-                DueDate = today.AddDays(14),
+                DueDate = today.AddDays(LoanDurationDays),
                 Status = LoanStatus.Active
             };
 
@@ -88,17 +96,7 @@ namespace LibraryHub.Application.Services
 
             await _loanRepository.SaveChangesAsync();
 
-            var loanDto = new LoanDto
-            {
-                Id = loan.Id,
-                MemberId = loan.MemberId,
-                BookId = loan.BookId,
-                LoanDate = loan.LoanDate,
-                DueDate = loan.DueDate,
-                ReturnDate = loan.ReturnDate,
-                Status = loan.Status,
-                FineAmount = null
-            };
+            var loanDto = _mapper.Map<LoanDto>(loan);
 
             return Result<LoanDto>.Success(loanDto);
         }
@@ -132,7 +130,7 @@ namespace LibraryHub.Application.Services
 
             if (lateDays > 0)
             {
-                fineAmount = lateDays * 2m;
+                fineAmount = lateDays * DailyFineAmount;
 
                 var fine = new Fine
                 {
@@ -149,17 +147,8 @@ namespace LibraryHub.Application.Services
 
             await _loanRepository.SaveChangesAsync();
 
-            var loanDto = new LoanDto
-            {
-                Id = loan.Id,
-                MemberId = loan.MemberId,
-                BookId = loan.BookId,
-                LoanDate = loan.LoanDate,
-                DueDate = loan.DueDate,
-                ReturnDate = loan.ReturnDate,
-                Status = loan.Status,
-                FineAmount = fineAmount
-            };
+            var loanDto = _mapper.Map<LoanDto>(loan);
+            loanDto.FineAmount = fineAmount;
 
             return Result<LoanDto>.Success(loanDto);
         }

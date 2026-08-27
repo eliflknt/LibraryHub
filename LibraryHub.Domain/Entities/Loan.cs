@@ -1,6 +1,5 @@
 ﻿using LibraryHub.Domain.Common;
 using LibraryHub.Domain.Enums;
-using static System.Net.WebRequestMethods;
 
 namespace LibraryHub.Domain.Entities;
 
