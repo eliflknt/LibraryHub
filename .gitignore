@@ -5,3 +5,4 @@
 bin/
 obj/
 /LibraryHub.WebApi/logs/libraryhub-20260820.log
+/LibraryHub.WebApi/logs/
